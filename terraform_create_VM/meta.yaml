@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: err0r
+    groups: sudo 
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorizad-keys:
+      - ssh-rsa AAAAB3NlMs=...
