@@ -18,23 +18,27 @@ resource "yandex_compute_instance" "vm01" {
     name    = "vm01"  
 
     resources {
-        cores   = 2                                 # ядра 
-        memory  = 2                                 # ОЗУ
+        cores   = 2                                           # ядра 
+        memory  = 2                                           # ОЗУ
     }
 
     boot_disk {
         initialize_params {
-            image_id = "fd8987mnac4uroc0d16s"       # Debian 11
-            size     = 20
+            image_id = "fd8987mnac4uroc0d16s"                 # Debian 11
+            size     = 20                                     # GB
         }
     }
 
     network_interface {
-        subnet_id = "e2lo98or94hlh59236bt"          # default-ru-central1-b
+        subnet_id = "e2lo98or94hlh59236bt"                    # default-ru-central1-b
         nat       = true
     }
 
+    scheduling_policy {
+      preemptible = true                                      # Прерываемая ВМ
+    }
+
     metadata = {
-        ssh-keys = "debian:${file("../keys/id_rsa.pub")}"       # Путь до публичного ключа SSH
+        ssh-keys = "debian:${file("../keys/id_rsa.pub")}"     # Путь до публичного ключа SSH
     }
 }
