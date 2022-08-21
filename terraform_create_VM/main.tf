@@ -25,26 +25,16 @@ resource "yandex_compute_instance" "vm01" {
     boot_disk {
         initialize_params {
             image_id = "fd8987mnac4uroc0d16s"       # Debian 11
+            size     = 20
         }
     }
 
     network_interface {
-        subnet_id = yandex_vpc_subnet.subnet_terraform.id
+        subnet_id = "e2lo98or94hlh59236bt"          # default-ru-central1-b
         nat       = true
     }
 
     metadata = {
-        user-data = "${file("./meta.yaml")}"
+        ssh-keys = "debian:${file("../keys/id_rsa.pub")}"       # Путь до публичного ключа SSH
     }
-}
-
-resource "yandex_vpc_network" "network_terraform" {
-    name    = "net_terraform"  
-}
-
-resource "yandex_vpc_subnet" "subnet_terraform" {
-    name            = "sub_terraform"
-    zone            = "ru-central1-b"
-    network_id      = yandex_vpc_network.network_terraform.id
-    v4_cidr_blocks  = ["192.168.15.0/24"]           # Внутренняя сеть
 }
