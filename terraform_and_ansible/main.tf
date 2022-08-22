@@ -8,10 +8,10 @@ terraform {
 }
 
 provider "yandex" {
-  token     = "y0_AgAAAABAZyfZAATuwQAAAADMsY_ZEVi3p421R9KcYp2lUN6P05xuCKI"
-  cloud_id  = "b1gbb934p45gbbtbtkt1"
-  folder_id = "b1gmi8r4f9ni7fj4qdlv"
-  zone      = "ru-central1-b"
+  token     = "<OAuth>"
+  cloud_id  = "<идентификатор облака>"
+  folder_id = "<идентификатор каталога>"
+  zone      = "<зона доступности по умолчанию>"
 }
 
 resource "yandex_compute_instance" "vm01" {
