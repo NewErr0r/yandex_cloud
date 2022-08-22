@@ -1,0 +1,37 @@
+---
+- name: Deploy Site
+  hosts: all 
+  become: true 
+
+  tasks: 
+    - name: Uptade all packages
+      apt:
+        name: "*"
+        state: latest
+        update_cache: yes 
+        force_apt_get: yes
+
+    - name: Install Web Server NGINX 
+      apt: 
+        name: nginx 
+        state: latest
+        update_cache: yes
+
+    - name: Started and Enabled NGINX 
+      service: 
+        name: nginx 
+        enabled: true 
+        state: started
+
+    - name: Configure 'index.html'
+      copy:
+        src: ./index.html
+        dest: /var/www/html/index.nginx-debian.html
+      notify:
+        - Restarted NGINX 
+
+  handlers:
+    - name: Restarted NGINX
+      service:
+        name: nginx 
+        state: restarted
